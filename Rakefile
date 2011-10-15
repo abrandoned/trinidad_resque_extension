@@ -13,7 +13,7 @@ def name
 end
 
 def version
-  line = File.read("lib/#{name}.rb")[/^\s*VERSION\s*=\s*.*/]
+  line = File.read("lib/#{name}/version.rb")[/^\s*VERSION\s*=\s*.*/]
   line.match(/.*VERSION\s*=\s*['"](.*)['"]/)[1]
 end
 
@@ -86,6 +86,7 @@ task :install => :build do
   sh "gem install pkg/#{name}-#{version}.gem"
 end
 
+desc "build the gemspec"
 task :gemspec do
   # read spec file and split out manifest section
   spec = File.read(gemspec_file)

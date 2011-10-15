@@ -1,11 +1,6 @@
-require File.expand_path('../resque_ext', __FILE__)
-
 module Trinidad
   module Extensions
     module Resque
-      require 'rake'
-      require 'resque/tasks'
-
       class ResqueLifecycleListener
         include Trinidad::Tomcat::LifecycleListener
 
@@ -15,9 +10,9 @@ module Trinidad
 
         def lifecycle_event(event)
           case event.type
-          when Trinidad::Tomcat::Lifecycle::BEFORE_START_EVENT
+          when Trinidad::Tomcat::Lifecycle::BEFORE_START_EVENT then
             start_workers
-          when Trinidad::Tomcat::Lifecycle::BEFORE_STOP_EVENT
+          when Trinidad::Tomcat::Lifecycle::BEFORE_STOP_EVENT then
             stop_workers
           end
         end
@@ -46,7 +41,7 @@ module Trinidad
 
           ENV['QUEUES'] ||= @options[:queues]
 
-          ::Resque.redis = @options[:redis_host]
+          ::Resque.redis = ::Redis.new(@options[:redis_host])
 
           load @options[:setup] if @options[:setup]
           task
@@ -55,7 +50,7 @@ module Trinidad
         def invoke_workers(task)
           Rake::Task[task].invoke
         rescue Errno::ECONNREFUSED
-          puts "WARN: Cannot connect with Redis. Please restart the server when Redis is up again."
+          warn "WARN: Cannot connect with Redis. Please restart the server when Redis is up again."
           @redis_econnref = true
         end
 
