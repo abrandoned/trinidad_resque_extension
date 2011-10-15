@@ -6,11 +6,11 @@ describe "Trinidad::Extensions::ResqueServerExtension" do
 
   context "without user options" do
     it "uses localhost:6379 as default redis installation" do
-      subject.options[:redis_host].should == 'localhost:6379'
+      subject.options[:redis_host].should eq({:host => 'localhost', :port => 6379, :db => 0})
     end
 
-    it "adds a default queue called 'trinidad_resque'" do
-      subject.options[:queues].should == 'trinidad_resque'
+    it "waits for jobs from all queues (queue *)" do
+      subject.options[:queues].should eq('*')
     end
 
     it "enables the reque console" do
