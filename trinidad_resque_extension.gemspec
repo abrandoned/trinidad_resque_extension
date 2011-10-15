@@ -59,9 +59,11 @@ Gem::Specification.new do |s|
     LICENSE
     README.md
     Rakefile
-    lib/resque_ext.rb
-    lib/resque_lifecycle_listener.rb
     lib/trinidad_resque_extension.rb
+    lib/trinidad_resque_extension/ext/resque.rb
+    lib/trinidad_resque_extension/resque_extension.rb
+    lib/trinidad_resque_extension/resque_lifecycle_listener.rb
+    lib/trinidad_resque_extension/version.rb
     spec/resque_lifecycle_listener_spec.rb
     spec/resque_test_setup.rb
     spec/spec.opts
