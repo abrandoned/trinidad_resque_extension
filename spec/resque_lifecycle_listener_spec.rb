@@ -1,9 +1,10 @@
 require File.expand_path('../spec_helper', __FILE__)
 
 describe "Trinidad::Extensions::Resque::ResqueLifecycleListener" do
+  include RedisMock::Helper
   R = Trinidad::Extensions::Resque::ResqueLifecycleListener
 
-  after :each do 
+  after(:each) do 
     env_keys = ["COUNT", "QUEUES"]
     env_keys.each{ |key| ENV.delete(key) }
   end
@@ -18,9 +19,10 @@ describe "Trinidad::Extensions::Resque::ResqueLifecycleListener" do
     ENV['QUEUES'].should eq('test')
   end
 
-  it "sets the redis host name" do
-    r = ::Resque.expects(:"redis=").with('localhost:6359')
-    configure_with_opts({:redis_host => 'localhost:6359'})
+  it "sets the redis connection" do
+    redis_mock(:port => 6359) do 
+      configure_with_opts({:redis_host => 'localhost:6359'})
+    end
   end
 
   it "sets the number of workers with the option :count" do

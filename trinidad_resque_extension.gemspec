@@ -14,7 +14,7 @@ Gem::Specification.new do |s|
   ## the sub! line in the Rakefile
   s.name              = 'trinidad_resque_extension'
   s.version           = '0.1.0'
-  s.date              = '2011-10-15'
+  s.date              = '2011-10-16'
   s.rubyforge_project = 'trinidad_resque_extension'
 
   ## Make sure your summary is short. The description may be as long
@@ -64,6 +64,7 @@ Gem::Specification.new do |s|
     lib/trinidad_resque_extension/resque_extension.rb
     lib/trinidad_resque_extension/resque_lifecycle_listener.rb
     lib/trinidad_resque_extension/version.rb
+    spec/redis_mock.rb
     spec/resque_lifecycle_listener_spec.rb
     spec/resque_test_setup.rb
     spec/spec.opts
