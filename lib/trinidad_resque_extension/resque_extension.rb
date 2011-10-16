@@ -70,6 +70,7 @@ module Trinidad
       private 
       
       def redis_connection(uri)
+        uri = "redis://#{uri}" if !uri.include?("//")
         redis_config = URI.parse(uri)
 
         return {

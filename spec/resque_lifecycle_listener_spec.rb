@@ -3,6 +3,11 @@ require File.expand_path('../spec_helper', __FILE__)
 describe "Trinidad::Extensions::Resque::ResqueLifecycleListener" do
   R = Trinidad::Extensions::Resque::ResqueLifecycleListener
 
+  after :each do 
+    env_keys = ["COUNT", "QUEUES"]
+    env_keys.each{ |key| ENV.delete(key) }
+  end
+
   it "configures workers with the task 'resque:work'" do
     task = configure_with_opts({})
     task.should eq('resque:work')
@@ -20,8 +25,8 @@ describe "Trinidad::Extensions::Resque::ResqueLifecycleListener" do
 
   it "sets the number of workers with the option :count" do
     task = configure_with_opts({:count => 3})
-    ENV['COUNT'].should == '3'
-    task.should == 'resque:workers'
+    ENV['COUNT'].should eq('3')
+    task.should eq('resque:workers')
   end
 
   it "loads the setup script with the option :setup" do
