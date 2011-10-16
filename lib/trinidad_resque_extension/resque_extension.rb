@@ -13,10 +13,10 @@ module Trinidad
 
       def initialize(options)
         super
-        @options[:redis_host] = redis_connection(@options[:redis_host] || 'redis://localhost:6379/0')
-        @options[:queues] = @options[:queues] || '*'
-        @options[:path] = File.expand_path(@options[:path] || File.join('lib', 'tasks'))
-        @options[:disable_web] = @options[:disable_web] || false
+        @options[:redis_host] = redis_connection(options[:redis_host] || 'redis://localhost:6379/0')
+        @options[:queues] = (options[:queues] || '*')
+        @options[:path] = File.expand_path(options[:path] || File.join('lib', 'tasks'))
+        @options[:disable_web] = (options[:disable_web] || false)
       end
 
       def configure(tomcat)
@@ -75,7 +75,7 @@ module Trinidad
         return {
           :host => (redis_config.host || "localhost"),
           :port => (redis_config.port || 6379),
-          :db => (redis_config.path[-1..1] || 0).to_i
+          :db => (redis_config.path.nil? ? 0 : redis_config.path[-1..1]).to_i
         }
       end
     end

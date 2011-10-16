@@ -5,12 +5,12 @@ describe "Trinidad::Extensions::Resque::ResqueLifecycleListener" do
 
   it "configures workers with the task 'resque:work'" do
     task = configure_with_opts({})
-    task.should == 'resque:work'
+    task.should eq('resque:work')
   end
 
   it "sets the name of the queues in the environment variable" do
     configure_with_opts({:queues => 'test'})
-    ENV['QUEUES'].should == 'test'
+    ENV['QUEUES'].should eq('test')
   end
 
   it "sets the redis host name" do
@@ -54,7 +54,8 @@ describe "Trinidad::Extensions::Resque::ResqueLifecycleListener" do
   end
 
   def configure_with_opts(options)
-    listener = R.new(options)
+    server_extension = Trinidad::Extensions::ResqueServerExtension.new(options)
+    listener = R.new(server_extension.options)
     listener.configure_workers
   end
 end

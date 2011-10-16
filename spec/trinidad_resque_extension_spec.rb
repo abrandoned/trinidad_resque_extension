@@ -14,7 +14,7 @@ describe "Trinidad::Extensions::ResqueServerExtension" do
     end
 
     it "enables the reque console" do
-      subject.options[:disable_web].should be_nil
+      subject.options[:disable_web].should be_false
     end
   end
 
