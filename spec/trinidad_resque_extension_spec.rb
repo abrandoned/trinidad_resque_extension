@@ -1,6 +1,7 @@
 require File.expand_path('../spec_helper', __FILE__)
 
 describe "Trinidad::Extensions::ResqueServerExtension" do
+  include RedisMock::Helper
   subject { Trinidad::Extensions::ResqueServerExtension.new({}) }
   let(:tomcat) { Trinidad::Tomcat::Tomcat.new }
 
@@ -19,8 +20,10 @@ describe "Trinidad::Extensions::ResqueServerExtension" do
   end
 
   it "add the resque listener to the tomcat's default host" do
-    subject.add_resque_listener tomcat
-    tomcat.host.find_lifecycle_listeners.should have(1).listener
+    redis_mock(:port => 6379) do 
+      subject.add_resque_listener tomcat
+      tomcat.host.find_lifecycle_listeners.should have(1).listener
+    end
   end
 
   it "creates an application context for the resque console" do

@@ -38,8 +38,10 @@ describe "Trinidad::Extensions::Resque::ResqueLifecycleListener" do
 
   it "invokes the rake task given its name" do
     Rake::Task.any_instance.expects(:invoke)
-    listener = R.new({})
-    listener.invoke_workers('resque:work')
+    redis_mock(:port => 6379) do 
+      listener = R.new({})
+      listener.invoke_workers('resque:work')
+    end
   end
 
   it "does not try to shut the workers down when it could not connect with Redis" do

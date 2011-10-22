@@ -21,7 +21,7 @@ module Trinidad
           Thread.new do
             load_tasks
             task = configure_workers
-            invoke_workers task
+            invoke_workers(task)
           end
         end
 
